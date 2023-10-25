@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Pokemon Names</title>
+
+</head>
+<body>
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5 box-shadow-nav" style="height: 80px">
+       <a class="navbar-brand" href="#">Покемоны</a>
+           <form class="form-inline my-5 my-lg-0" method="get">
+               <input class="form-control mr-sm-3" type="search" placeholder="Введите имя покемона" name="q" value="{{ search_query }}" style="width: 300px;height: 40px;font-size:20px;">
+               <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="font-size: 17px">Поиск</button>
+           </form>
+   </nav>
+
+   <div class="container-md">
+       <div class="row">
+           {% for pokemon in pokemons %}
+           <div class="col-md-4" style="height: 80%; margin-top: 10px">
+               <div class="card box-shadow-nav">
+               <div class="aspect-ratio-box">
+               <a href="{{ url_for('pokemon', name=pokemon.name) }}"><img src="{{ pokemon.image_url }}"  data-bs-toggle="modal" data-bs-target="#exampleModal"  alt="{{pokemon.name}}"  style="width: 100%" /></a>
+               </div>
+               <div class="card-body">
+                   <a href="{{ url_for('pokemon', name=pokemon.name) }}"><h4 class="card-title" id="name" data-bs-toggle="modal" data-bs-target="#exampleModal">{{pokemon.name}}</h4></a>
+                   <h5 class="card-text" id="speed"> Скорость: {{pokemon.speed}}</h5>
+                   <h5 class="card-text" id="defense"> Защита: {{pokemon.defense}}</h5>
+                   <a href="{{ url_for('fight', name=pokemon.name) }}"  onclick="savePokemonName('{{pokemon.name}}','{{pokemon.image_url}}','{{pokemon.attack}}','{{pokemon.defense}}')" class="btn btn-success" style="font-size: 120%">Выбрать</a>
+               </div>
+           </div>
+           </div>
+           {% endfor %}
+       </div>
+   </div>
+   {% if total_pages > 1 %}
+   <nav>
+       <ul class="pagination justify-content-center">
+           <li class="page-item {% if current_page == 1 %}disabled{% endif %}">
+               <a class="page-link" href="{% if current_page == 1 %}#{% else %}?page={{ current_page - 1 }}{% endif %}" aria-label="Предыдущая">
+                   <span aria-hidden="true">&laquo;</span>
+               </a>
+           </li>
+           {% for i in range(1, total_pages + 1) %}
+           {% if i == current_page %}
+           <li class="page-item active">
+               <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+           </li>
+           {% elif i <= current_page + 2 and i >= current_page - 2 %}
+           <li class="page-item">
+               <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+           </li>
+           {% endif %}
+           {% endfor %}
+           <li class="page-item {% if current_page == total_pages %}disabled{% endif %}">
+               <a class="page-link" href="{% if current_page == total_pages %}#{% else %}?page={{ current_page + 1 }}{% endif %}" aria-label="Следующая">
+                   <span aria-hidden="true">&raquo;</span>
+               </a>
+           </li>
+       </ul>
+   </nav>
+   {% endif %}
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="../static/scripts.js"></script>
+</html>

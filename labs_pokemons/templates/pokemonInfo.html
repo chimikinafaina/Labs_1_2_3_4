@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Информация о покемоне</title>
+</head>
+<body>
+<h1 class="text-center">Информация о {{pokemon.name}}</h1>
+<div class="container">
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-md-6">
+            <div class="card box-shadow-nav">
+                <div class="aspect-ratio-box">
+                    <img src="{{pokemon.image_url}}" />
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title"></h4>
+                    <h5 class="card-text">Скорость: {{pokemon.speed}}</h5>
+                    <h5 class="card-text">Защита: {{pokemon.defense}}</h5>
+                    <h5 class="card-text">Атака: {{pokemon.attack}}</h5>
+                    <h5 class="card-text">Жизнь: {{pokemon.hp}}</h5>
+                    <h5 class="card-text">Вес: {{pokemon.weight}}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-center" style="margin-top: 10px">
+    <a href="{{ url_for('save', name=pokemon.name, speed=pokemon.speed,
+    hp=pokemon.hp,defense=pokemon.defense,attack=pokemon.attack, weight=pokemon.weight) }}" style="margin-top: 5px" >Сохранить информацию о покемоне</a>
+</div>
+<div class="text-center" style="margin-top: 10px">
+    <a href="{{ url_for('index') }}" style="margin-top: 5px" >На главную</a>
+</div>
+
+</body>
+</html>

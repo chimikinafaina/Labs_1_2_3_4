@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Быстрый бой</title>
+</head>
+<body>
+<h1 class="text-center">Битва Покемонов!</h1>
+
+<div class="container-md">
+       <div class="row">
+           <div class="col-md-6" style="height: 80%; margin-top: 10px">
+               <div class="card box-shadow-nav">
+                   <div class="aspect-ratio-box" >
+                       <img src="{{img_pokemon}}" />
+                   </div>
+                   <div class="card-body">
+                       <h4 class="card-title"  id="user_pokemon"></h4>
+                   </div>
+               </div>
+           </div>
+           <div class="col-md-6" style="height: 80%; margin-top: 10px">
+               <div class="card box-shadow-nav">
+                   <div class="aspect-ratio-box">
+                       <img src="{{img}}" />
+                   </div>
+                   <div class="card-body">
+                       <h4 class="card-title">{{opponent_pokemon_name}}</h4>
+                   </div>
+               </div>
+           </div>
+       </div>
+</div>
+<div style="margin-top: 5px">
+    <h1 class="text-center">{{result_text}}</h1>
+    <h3 class="text-center">{{result}}</h3>
+</div>
+{% if hp <= 0 or hp_pokemon<= 0 %}
+<div class="container" style="margin-top: 10px">
+    <div class="text-center">
+        <form method="POST" action="{{ url_for('quickBattle', name=name) }}">
+            <div class="form-group" >
+                <h4 for="tentacles">Введите адрес электронной почты:</h4><br>
+<!--                <input type="number" id="tentacles" name="submit" min="1" max="10"/>-->
+<!--                <input type="submit" value="Отправить" class="btn btn-primary">-->
+<!--                <button>Отправить результат на email</button>-->
+                <p><input type="text" name="email"/></p>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="text-center">
+    <h4>{{result_text_message}}</h4>
+</div>
+<div class="text-center">
+    <a href="{{ url_for('index') }}" style="margin-top: 5px" >На главную</a>
+</div>
+{% endif %}
+<script>
+    var name = localStorage.getItem("name");
+    //var image_url = localStorage.getItem("image_url");
+    document.querySelector("#user_pokemon").innerHTML = name;
+    // Получаем данные из local storage
+    const imageData = localStorage.getItem('image_url');
+    // Находим тег img и устанавливаем URL в атрибут src
+    const img = document.querySelector('img');
+    img.src = imageData;
+</script>
+</body>
+</html>
